@@ -1,5 +1,5 @@
 # =============================================================
-# pipeline.py — Main Pipeline Module
+# pipeline.py - Main Pipeline Module
 # =============================================================
 # This file connects all 3 modules together into one flow:
 #
@@ -30,18 +30,18 @@ def run_analysis(ticker: str, company_name: str = "") -> dict:
     print(f"Running analysis for {ticker}...")
     print(f"{'='*50}")
 
-    # Step 1 — Collect headlines
+    # Step 1: Collect headlines
     print("\n[1/3] Fetching headlines...")
     headlines = get_news(ticker, company_name)
     print(f"      Found {len(headlines)} headlines")
 
-    # Step 2 — Score sentiment
+    # Step 2: Score sentiment
     print("\n[2/3] Analyzing sentiment...")
     sentiment = analyze_multiple(headlines)
     print(f"      Average score: {sentiment['average_score']}")
     print(f"      Overall sentiment: {sentiment['overall_label']}")
 
-    # Step 3 — Fetch stock price
+    # Step 3: Fetch stock price
     print("\n[3/3] Fetching stock price...")
     price = get_stock_price(ticker)
     print(f"      Current price: ${price['current_price']}")
@@ -63,7 +63,7 @@ def run_analysis(ticker: str, company_name: str = "") -> dict:
 
     return result
 
-# Test it
+# Test
 if __name__ == "__main__":
     result = run_analysis("NVDA", "NVIDIA")
 

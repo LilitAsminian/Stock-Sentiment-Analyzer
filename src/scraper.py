@@ -63,7 +63,7 @@ def get_news(ticker: str, company_name: str = "") -> list:
     return headlines
 
 
-# Test it
+# Test
 if __name__ == "__main__":
     print("--- Fetching News for NVIDIA ---")
     headlines = get_news("NVDA", "NVIDIA")
