@@ -28,7 +28,19 @@
 #   "NVIDIA faces export ban"  → negative | score: -0.96
 # =============================================================
 
+import os
+import warnings
+
+# Hide download warnings and progress bars so the output stays clean
+os.environ.setdefault("HF_HUB_VERBOSITY", "error")
+os.environ.setdefault("HF_HUB_DISABLE_PROGRESS_BARS", "1")
+warnings.filterwarnings("ignore", message="IProgress not found")
+
 from transformers import pipeline
+from transformers.utils import logging as hf_logging
+
+hf_logging.set_verbosity_error()
+hf_logging.disable_progress_bar()
 
 # Load FinBERT model (this is the AI that reads financial text)
 finbert = pipeline("text-classification", model="ProsusAI/finbert")
