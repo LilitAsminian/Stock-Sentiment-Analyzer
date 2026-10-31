@@ -18,7 +18,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from scraper import get_news
 from sentiment import analyze_multiple
-from stocks import get_stock_price, get_stock_history
+from stocks import get_stock_price
 from datetime import datetime
 
 def run_analysis(ticker: str, company_name: str = "") -> dict:

@@ -2,7 +2,7 @@
 # scraper.py — Data Collection Module
 # =============================================================
 # This file is responsible for automatically collecting news
-# headlines and Reddit posts about any stock from the internet.
+# headlines about any stock from the internet.
 # Think of it as a robot that reads the news so you don't have to.
 #
 # What it will do:
@@ -10,14 +10,10 @@
 #     articles mentioning a stock (e.g. "NVIDIA") and returns
 #     a list of headlines from thousands of news sources.
 #
-#   - get_reddit_posts(ticker): searches Reddit (specifically
-#     r/wallstreetbets and r/stocks) for recent posts mentioning
-#     the stock and returns their titles and content.
-#
 # Why we need it:
 #   Instead of manually typing headlines into sentiment.py,
-#   this file automatically collects hundreds of real headlines
-#   every day. Those headlines are then passed to sentiment.py
+#   this file automatically collects the latest real headlines
+#   on every run. Those headlines are then passed to sentiment.py
 #   to be scored, and the scores are compared against stock
 #   prices from stocks.py.
 #

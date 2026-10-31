@@ -6,8 +6,8 @@
 # to read text and decide if it is positive, negative, or neutral.
 #
 # What it does:
-#   - analyze_sentiment(text): takes ONE piece of text (a headline,
-#     a Reddit post, etc.) and returns:
+#   - analyze_sentiment(text): takes ONE piece of text (e.g. a news
+#     headline) and returns:
 #       * label: "positive", "negative", or "neutral"
 #       * confidence: how sure the model is (0 to 1)
 #       * sentiment_score: a score from -1 (very negative)
@@ -18,8 +18,8 @@
 #     of them combined.
 #
 # Why we need it:
-#   We feed it hundreds of news headlines and Reddit posts about
-#   a stock every day. It scores each one automatically so we
+#   We feed it the news headlines collected for a stock.
+#   It scores each one automatically so we
 #   can track whether public opinion is turning positive or
 #   negative — without reading anything manually.
 #
