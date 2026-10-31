@@ -1,6 +1,8 @@
 # Stock Sentiment Analyzer
 
-A Python project that collects financial news headlines, measures their sentiment with FinBERT (a transformer language model trained on financial text), and compares that sentiment with stock price movements.
+**Does what the news says about a stock match what its price actually does?**
+
+A Python project that compares **what people are saying** about a stock with **reality**. It collects financial news headlines, measures their sentiment with FinBERT (a transformer language model trained on financial text), and compares the daily sentiment with the stock's price movements over a month.
 
 ## How It Works
 
@@ -10,8 +12,9 @@ The project is built as connected modules:
 2. **Score:** `src/sentiment.py` uses FinBERT to rate each headline as positive, negative, or neutral and gives it a score from -1 to +1.
 3. **Compare:** `src/stocks.py` downloads current and historical stock prices from Yahoo Finance so they can be compared with the sentiment scores.
 4. **Run:** `src/pipeline.py` runs all three steps for a ticker in a single function call.
+5. **Track over time:** `src/history.py` collects and scores the headlines for every day in a date range, saves them to `data/`, and lines up each trading day's sentiment with that day's price change.
 
-`notebook.ipynb` walks through the full analysis step by step, with charts and explanations.
+`notebook.ipynb` walks through the full analysis step by step, with charts and explanations. Part 1 looks at today's headlines; Part 2 compares a full month of daily sentiment with the price.
 
 ## Tools and Libraries
 
@@ -25,13 +28,14 @@ The project is built as connected modules:
 
 ```
 Stock-Sentiment-Analyzer/
-├── data/                  # Scored headlines saved by the notebook
+├── data/                  # Saved headlines and sentiment scores
 ├── iframe_figures/        # Charts exported from the notebook
 ├── src/
 │   ├── scraper.py         # Collects news headlines
 │   ├── sentiment.py       # Scores sentiment with FinBERT
 │   ├── stocks.py          # Fetches stock price data
-│   └── pipeline.py        # Runs the full analysis
+│   ├── pipeline.py        # Runs the full analysis
+│   └── history.py         # Builds a month of daily sentiment vs. price
 ├── notebook.ipynb         # Main analysis notebook
 ├── requirements.txt       # Python dependencies
 └── README.md
@@ -77,15 +81,20 @@ Never commit this file. It is listed in `.gitignore`.
   ```bash
   python src/pipeline.py
   ```
-- Or open `notebook.ipynb` in Jupyter or VS Code and run the cells to see each step with charts.
+- Or open `notebook.ipynb` in Jupyter or VS Code and run the cells to see each step with charts. The month of headlines used in Part 2 is saved in `data/`, so it loads without calling the API again.
 
 ## Results
 
-In the run saved in the notebook (NVIDIA, October 31, 2026), the 20 headlines had an average sentiment of **+0.08**, just below the threshold for "positive", so the overall label was **neutral**. The stock still fell **4.22%**, which means the headlines did not capture what drove the move. Several headlines were mainly about other companies and only mentioned NVIDIA, which shows that headline relevance matters. A single day is not enough to judge whether sentiment predicts price; the next step is to collect sentiment daily and compare it with price changes over time.
+Between October 1 and October 30, 2026, the project analyzed **1,664 NVIDIA headlines** across **22 trading days**.
 
-![Sentiment score per headline](iframe_figures/sentiment_bar.png)
+- **The news was more positive than reality.** Headlines leaned positive on 17 of 22 days, with positive headlines outnumbering negative ones by almost 2 to 1. Meanwhile, the stock went up on only 9 days and fell **10.4%** over the month.
+- **The news followed the price more than it predicted it.** Daily sentiment correlated most with the *previous* day's price move (+0.49), less with the same day's (+0.27), and barely with the next day's (+0.14). On days with a clear signal, the price moved the way the news leaned the next day only 8 times out of 16, no better than a coin flip.
 
-![Sentiment vs price movement](iframe_figures/sentiment_vs_price.png)
+With one stock and 22 trading days, these results are a strong hint, not proof.
+
+![Talk vs. reality over one month](iframe_figures/month_talk_vs_reality.png)
+
+![Does the news lead or follow the price?](iframe_figures/sentiment_lead_or_follow.png)
 
 ## Author
 

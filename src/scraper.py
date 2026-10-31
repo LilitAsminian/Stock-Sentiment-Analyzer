@@ -59,6 +59,32 @@ def get_news(ticker: str, company_name: str = "") -> list:
     return headlines
 
 
+def get_news_for_day(ticker: str, company_name: str, day: str) -> list:
+    """
+    Fetch up to 100 headlines published on one day (YYYY-MM-DD)
+    that mention the company or ticker in the title.
+    Returns a list of dicts with the publish date and text.
+    """
+    response = newsapi.get_everything(
+        qintitle=f"{company_name} OR {ticker}",
+        language="en",
+        from_param=day,
+        to=day,
+        page_size=100
+    )
+
+    articles = []
+    for article in response["articles"]:
+        if article["publishedAt"][:10] != day:
+            continue
+        title = article["title"]
+        description = article["description"]
+        text = f"{title}. {description}" if description else title
+        articles.append({"published": day, "text": text})
+
+    return articles
+
+
 # Test
 if __name__ == "__main__":
     print("--- Fetching News for NVIDIA ---")
